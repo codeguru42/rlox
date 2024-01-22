@@ -30,18 +30,23 @@ impl VM {
     }
     fn run(&mut self) -> InterpretResult {
         loop {
-            let instruction = self.chunk.code[self.ip];
-            self.ip += 1;
+            let instruction = self.get_byte();
 
             match OpCode::try_from(instruction) {
                 Ok(OpCode::OpReturn) => return InterpretResult::InterpretOk,
                 Ok(OpCode::OpConstant) => {
-                    let constant = self.chunk.constants[self.chunk.code[self.ip] as usize];
-                    self.ip += 1;
+                    let idx = self.get_byte() as usize;
+                    let constant = self.chunk.constants[idx];
                     print_value(constant);
                 }
                 _ => {}
             }
         }
+    }
+
+    fn get_byte(&mut self) -> u8 {
+        let byte = self.chunk.code[self.ip];
+        self.ip += 1;
+        byte
     }
 }
