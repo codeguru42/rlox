@@ -30,6 +30,7 @@ impl VM {
     }
     fn run(&mut self) -> InterpretResult {
         loop {
+            self.chunk.disassemble_instruction(self.ip);
             let instruction = self.get_byte();
 
             match OpCode::try_from(instruction) {

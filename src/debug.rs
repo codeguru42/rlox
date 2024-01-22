@@ -9,7 +9,8 @@ impl Chunk {
             offset = self.disassemble_instruction(offset);
         }
     }
-    fn disassemble_instruction(&self, offset: usize) -> usize {
+
+    pub(crate) fn disassemble_instruction(&self, offset: usize) -> usize {
         print!("{} ", offset);
 
         if offset > 0 && self.lines[offset] == self.lines[offset - 1] {
