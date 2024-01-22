@@ -5,8 +5,8 @@ mod debug;
 mod value;
 
 mod prelude {
-    pub use crate::chunk::*;
-    pub use crate::value::*;
+    pub(crate) use crate::chunk::*;
+    pub(crate) use crate::value::*;
 }
 
 fn main() {
