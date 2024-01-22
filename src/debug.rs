@@ -12,6 +12,12 @@ impl Chunk {
     fn disassemble_instruction(&self, offset: usize) -> usize {
         print!("{} ", offset);
 
+        if offset > 0 && self.lines[offset] == self.lines[offset - 1] {
+            print!(" | ")
+        } else {
+            print!("{} ", self.lines[offset])
+        }
+
         let instruction = self.code[offset];
         return match OpCode::try_from(instruction) {
             Ok(OpCode::OpReturn) => simple_instruction("OP_RETURN", offset),

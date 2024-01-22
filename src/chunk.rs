@@ -1,5 +1,6 @@
-use crate::value::Value;
 use int_enum::IntEnum;
+
+use crate::value::Value;
 
 #[repr(u8)]
 #[derive(IntEnum)]
@@ -11,6 +12,7 @@ pub enum OpCode {
 pub struct Chunk {
     pub(crate) code: Vec<u8>,
     pub(crate) constants: Vec<Value>,
+    pub(crate) lines: Vec<u32>,
 }
 
 impl Chunk {
@@ -18,11 +20,13 @@ impl Chunk {
         Self {
             code: Vec::new(),
             constants: Vec::new(),
+            lines: Vec::new(),
         }
     }
 
-    pub(crate) fn write(&mut self, byte: u8) {
+    pub(crate) fn write(&mut self, byte: u8, line: u32) {
         self.code.push(byte);
+        self.lines.push(line);
     }
 
     pub(crate) fn add_constant(&mut self, value: Value) -> u8 {
